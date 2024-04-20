@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizza Ordering System</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    
+    form {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 320px;
+        max-width: 100%;
+    }
+    
+    h1 {
+        text-align: center;
+        color: #333333;
+        margin-bottom: 20px;
+    }
+    
+    h3 {
+        margin-top: 15px;
+        color: #333333;
+    }
+    
+    input[type="radio"],
+    input[type="checkbox"] {
+        margin-right: 5px;
+    }
+    
+    label {
+        color: #555555;
+    }
+    
+    button {
+        background-color: #4caf50;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 20px;
+        display: block;
+        width: 100%;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+        background-color: #45a049;
+    }
+    
+    #total {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 18px;
+        color: #333333;
+    }
+</style>
+<script>
+function calculateTotal() {
+    var size = document.querySelector('input[name="size"]:checked').value;
+    var toppings = document.querySelectorAll('input[name="topping"]:checked');
+    var delivery = document.getElementById('delivery').checked;
+    
+    var basePrice = 0;
+    
+    // Determine base price based on size
+    switch(size) {
+        case "small":
+            basePrice = 10;
+            break;
+        case "medium":
+            basePrice = 15;
+            break;
+        case "large":
+            basePrice = 20;
+            break;
+    }
+    
+    // Add additional cost for each selected topping
+    var toppingPrice = 0;
+    toppings.forEach(function(topping) {
+        toppingPrice += 2; // Each topping costs $2
+    });
+    
+    // Add delivery fee if applicable
+    var deliveryFee = delivery ? 5 : 0;
+    
+    // Calculate total
+    var totalPrice = basePrice + toppingPrice + deliveryFee;
+    
+    // Display total to the user
+    document.getElementById("total").innerText = "Total Cost: $" + totalPrice.toFixed(2);
+}
+</script>
+</head>
+<body>
+<div class="container">
+    <form>
+        <h1>Pizza Mania</h1>
+        <h3>Choose Pizza Size:</h3>
+        <input type="radio" id="small" name="size" value="small" checked>
+        <label for="small">Small</label><br>
+        <input type="radio" id="medium" name="size" value="medium">
+        <label for="medium">Medium</label><br>
+        <input type="radio" id="large" name="size" value="large">
+        <label for="large">Large</label><br>
+        
+        <h3>Select Toppings:</h3>
+        <input type="checkbox" id="pepperoni" name="topping" value="pepperoni">
+        <label for="pepperoni">Pepperoni</label><br>
+        <input type="checkbox" id="mushrooms" name="topping" value="mushrooms">
+        <label for="mushrooms">Mushrooms</label><br>
+        <input type="checkbox" id="onions" name="topping" value="onions">
+        <label for="onions">Onions</label><br>
+        
+        <h3>Delivery:</h3>
+        <input type="checkbox" id="delivery" name="delivery">
+        <label for="delivery">Delivery</label><br>
+        
+        <br>
+        <button type="button" onclick="calculateTotal()">Calculate Total</button>
+    </form>
+    <div id="total"></div>
+</div>
+</body>
+</html>
